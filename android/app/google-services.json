@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "263052277632",
+    "project_id": "ssoma-app-b6c6c",
+    "storage_bucket": "ssoma-app-b6c6c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263052277632:android:e22b6e4ba6243d768eb365",
+        "android_client_info": {
+          "package_name": "com.example.ssoma_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiOF5C9JOqQzrIJ_1F5DHOiLUVhHW9AnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
