@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart' show SvgPicture;
+import 'package:ssoma_app/widgets/my_drawer_widet.dart';
 
 class PantallaListaIncidente extends StatefulWidget {
   const PantallaListaIncidente({super.key});
@@ -8,15 +9,24 @@ class PantallaListaIncidente extends StatefulWidget {
   State<PantallaListaIncidente> createState() => _PantallaListaIncidenteState();
 }
 
-class _PantallaListaIncidenteState extends State<PantallaListaIncidente> {
+class _PantallaListaIncidenteState extends State<PantallaListaIncidente>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Perfil ",
+          "Estado de los Formularios ",
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.green,
           ),
@@ -31,96 +41,16 @@ class _PantallaListaIncidenteState extends State<PantallaListaIncidente> {
             ),
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.grey[200]),
-              child: Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 32,
-                        backgroundImage: AssetImage("assets/images/logo2.png"),
-                        backgroundColor: Colors.grey[200],
-                      ),
-                      Text(
-                        "SIG Smart Evolution",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "SSOMA",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.people, color: Colors.green),
-              title: Text("Mi perfil"),
-            ),
-            ListTile(
-              leading: Icon(Icons.lock, color: Colors.green),
-              title: Text("Cambiar Contraseña"),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.file_copy, color: Colors.green),
-              title: Text("Formulario Incidentes"),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.file_copy_sharp, color: Colors.green),
-              title: Text("Formulario OPT"),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.file_copy_sharp, color: Colors.green),
-              title: Text("Formulario IPERC"),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.file_copy_sharp, color: Colors.green),
-              title: Text("Formulario PETAR"),
-            ),
-            ListTile(
-              leading: Icon(Icons.file_copy_sharp, color: Colors.red),
-              title: Text("Formulario Flash Report"),
-            ),
-            ListTile(
-              leading: Icon(Icons.file_copy_sharp, color: Colors.red),
-              title: Text("Formulario Accidentes"),
-            ),
-            Divider(),
-
-            ListTile(
-              leading: Icon(Icons.download, color: Colors.black),
-              title: Text("Descargar Excel"),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings_backup_restore, color: Colors.black),
-              title: Text("Configuraciones"),
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app, color: Colors.black),
-              title: Text("Cerrar Sesion"),
-            ),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(child: Text("Abiertos")),
+            Tab(child: Text("Cerrados")),
+            Tab(child: Text("En Proceso")),
           ],
         ),
       ),
+      drawer: MyDrawerWidet(),
       body: Center(child: Column()),
     );
   }
