@@ -18,6 +18,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final authRepo = AuthRepository();
+  bool isFinished = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,30 @@ class _PantallaLoginState extends State<PantallaLogin> {
                     icono: Icons.lock,
                   ),
                 ),
+                SizedBox(height: 6),
+
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isFinished,
+                      onChanged: (value) {
+                        isFinished = value!;
+                        setState(() {});
+                      },
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Al continuar aceptas los Terminos y"),
+                          Text("Condiciones y Politicas de privacidad"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
                 ElevatedButton(
                   onPressed: () async {
                     try {
