@@ -14,7 +14,7 @@ class PantallaLogin extends StatefulWidget {
 }
 
 class _PantallaLoginState extends State<PantallaLogin> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Clave para el formulario
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final authRepo = AuthRepository();
@@ -24,7 +24,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formKey,
+        key: _formKey, // Asigna la clave al formulario
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
@@ -49,6 +49,17 @@ class _PantallaLoginState extends State<PantallaLogin> {
                     label: "Correo electronico ",
                     keyboardType: TextInputType.emailAddress,
                     icono: Icons.email,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Ingrese su correo electrónico";
+                      }
+                      if (!RegExp(
+                        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
+                        return "Ingrese un correo electrónico válido";
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 SizedBox(
@@ -60,10 +71,15 @@ class _PantallaLoginState extends State<PantallaLogin> {
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     icono: Icons.lock,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Ingrese su contraseña";
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 SizedBox(height: 6),
-
                 Row(
                   children: [
                     Checkbox(
@@ -85,31 +101,32 @@ class _PantallaLoginState extends State<PantallaLogin> {
                     ),
                   ],
                 ),
-
                 ElevatedButton(
                   onPressed: () async {
-                    try {
-                      await authRepo.login(
-                        correo: _emailController.text,
-                        contrasenia: _passwordController.text,
-                      );
-                      if (context.mounted) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return SplashScreen();
-                            },
-                          ),
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        await authRepo.login(
+                          correo: _emailController.text,
+                          contrasenia: _passwordController.text,
                         );
-                      }
-                    } catch (e) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('No se pudo ignresar al sistema'),
-                          ),
-                        );
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return SplashScreen();
+                              },
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('No se pudo ingresar al sistema'),
+                            ),
+                          );
+                        }
                       }
                     }
                   },

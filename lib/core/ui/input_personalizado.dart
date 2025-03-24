@@ -12,6 +12,8 @@ class InputPerzonalizado extends StatefulWidget {
     this.maxLength,
     this.icono,
     this.obscureText = false,
+    this.validator,
+    this.readOnly = false,
   });
 
   final String label;
@@ -22,6 +24,8 @@ class InputPerzonalizado extends StatefulWidget {
   final int? maxLength;
   final IconData? icono;
   final bool obscureText;
+  final String? Function(String?)? validator;
+  final bool readOnly;
 
   @override
   State<InputPerzonalizado> createState() => _InputPerzonalizadoState();
@@ -41,12 +45,14 @@ class _InputPerzonalizadoState extends State<InputPerzonalizado> {
     return SizedBox(
       width: 200,
       child: TextFormField(
+        validator: widget.validator,
         autocorrect: widget.autocorrect,
         inputFormatters: widget.inputFormatters,
         controller: widget.controller,
         keyboardType: widget.keyboardType,
         obscureText: _obscureText,
         maxLength: widget.maxLength,
+        readOnly: widget.readOnly,
         decoration: InputDecoration(
           prefixIcon: widget.icono != null ? Icon(widget.icono) : null,
           suffixIcon:

@@ -37,6 +37,10 @@ class AuthRepository {
     required String nombre,
     required String apellido,
     required String empresa,
+    required String empresaId,
+    required DateTime fechaCreacion,
+    required String minera,
+    required String mineraId,
   }) async {
     try {
       final result =
@@ -68,7 +72,9 @@ class AuthRepository {
         'nombre': nombre,
         'apellido': apellido,
         'correo': email,
-        "empresa": empresa,
+        "empresa": empresaId,
+        "fechaCreacion": fechaCreacion,
+        "minera": mineraId,
       });
     } on FirebaseAuthException catch (e) {
       // Manejar excepciones específicas de Firebase Auth
@@ -82,7 +88,6 @@ class AuthRepository {
         throw ExcepcionRegistrarse('Error al registrar usuario: ${e.message}');
       }
     } catch (e) {
-      // Manejar otras excepciones
       throw ExcepcionRegistrarse('Error desconocido: ${e.toString()}');
     }
   }

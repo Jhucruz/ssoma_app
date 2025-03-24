@@ -4,6 +4,7 @@ import 'package:ssoma_app/screens/splash_screen.dart' show SplashScreen;
 import 'package:ssoma_app/core/ui/input_personalizado.dart'
     show InputPerzonalizado;
 import 'package:ssoma_app/repositories/auth_reporsitory.dart';
+import 'package:uuid/uuid.dart';
 
 class PantallaRegistro extends StatefulWidget {
   const PantallaRegistro({super.key});
@@ -19,7 +20,30 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
   final _correoController = TextEditingController();
   final _contraseniaController = TextEditingController();
   final _contraseController = TextEditingController();
-  final _empresa = TextEditingController();
+  final _fechaCreacionController = TextEditingController();
+  final DateTime _fechaCreacion = DateTime.now();
+
+  final List<Map<String, String>> _empresas = [
+    {"id": "1", "name": 'Empresa A'},
+    {"id": "2", "name": 'Empresa B'},
+  ];
+  String? _empresaId;
+  String? _empresaUuid;
+
+  final List<Map<String, String>> _mineras = [
+    {"id": "1", "name": 'Minera A'},
+    {"id": "2", "name": "Minera B"},
+  ];
+
+  String? _mineraId;
+  String? _mineraUuid;
+
+  @override
+  void initState() {
+    super.initState();
+    _fechaCreacionController.text =
+        "${_fechaCreacion.day}/${_fechaCreacion.month}/${_fechaCreacion.year}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,36 +81,117 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
 
                     children: [
                       SizedBox(height: 16),
-
+                      InputPerzonalizado(
+                        controller: _fechaCreacionController,
+                        label: "Fecha de Registro",
+                        readOnly: true,
+                      ),
+                      SizedBox(height: 16),
                       InputPerzonalizado(
                         controller: _nombreController,
                         label: "Nombres",
                         keyboardType: TextInputType.name,
                         icono: Icons.person_2_outlined,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Ingrese su nombre";
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(
-                        height: 16,
-                      ), // Mantener solo el SizedBox con height: 16
+                      SizedBox(height: 16),
                       InputPerzonalizado(
                         controller: _apellidoController,
                         label: "Apellidos",
                         keyboardType: TextInputType.name,
                         icono: Icons.person_2_outlined,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Ingrese su apellido";
+                          }
+                          return null;
+                        },
                       ),
+                      SizedBox(height: 16),
+
+                      DropdownButtonFormField<String>(
+                        value: _mineraId,
+                        items:
+                            _mineras.map((minera) {
+                              return DropdownMenuItem<String>(
+                                value: minera["id"],
+                                child: Text(minera["name"]!),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _mineraId = newValue;
+                            _mineraUuid = const Uuid().v4();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Unidad Minera",
+                          icon: Icon(Icons.business), // Puedes cambiar el icono
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Seleccione la Unidad Minera";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      SizedBox(height: 16),
+
+                      DropdownButtonFormField<String>(
+                        value: _empresaId,
+                        items:
+                            _empresas.map((empresa) {
+                              return DropdownMenuItem<String>(
+                                value: empresa["id"],
+                                child: Text(empresa["name"]!),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _empresaId = newValue;
+                            _empresaUuid = const Uuid().v4();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Empresa",
+                          icon: Icon(Icons.business),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Seleccione una empresa";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+
                       SizedBox(height: 16),
                       InputPerzonalizado(
                         controller: _correoController,
                         label: "Correo electronico",
                         keyboardType: TextInputType.emailAddress,
                         icono: Icons.email,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Ingrese su correo electrónico";
+                          }
+                          if (!RegExp(
+                            r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[\w-]{2,4}$',
+                          ).hasMatch(value)) {
+                            return "Ingrese un correo electrónico válido";
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(height: 16),
-                      InputPerzonalizado(
-                        controller: _empresa,
-                        label: "Empresa ",
-                        keyboardType: TextInputType.name,
-                        icono: Icons.lock,
-                      ),
+
                       SizedBox(height: 16),
                       InputPerzonalizado(
                         controller: _contraseniaController,
@@ -95,6 +200,15 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                         icono: Icons.lock,
                         obscureText: true,
                         maxLength: 8,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Ingrese su contraseña";
+                          }
+                          if (value.length < 6) {
+                            return "La contraseña debe tener al menos 6 caracteres";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 16),
                       InputPerzonalizado(
@@ -104,6 +218,15 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                         icono: Icons.lock,
                         obscureText: true,
                         maxLength: 8,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Repita su contraseña";
+                          }
+                          if (value != _contraseniaController.text) {
+                            return "Las contraseñas no coinciden";
+                          }
+                          return null;
+                        },
                       ),
 
                       SizedBox(height: 16),
@@ -112,40 +235,46 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            try {
-                              final authRepo = AuthRepository();
-                              await authRepo.registrarUsuario(
-                                email: _correoController.text,
-                                contrasenia: _contraseniaController.text,
-                                nombre: _nombreController.text,
-                                apellido: _apellidoController.text,
-                                empresa: _empresa.text,
-                              );
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Usuario creado corectamente",
+                            if (_formKey.currentState!.validate()) {
+                              try {
+                                final authRepo = AuthRepository();
+                                await authRepo.registrarUsuario(
+                                  email: _correoController.text,
+                                  contrasenia: _contraseniaController.text,
+                                  nombre: _nombreController.text,
+                                  apellido: _apellidoController.text,
+                                  empresa: _empresaId!,
+                                  empresaId: _empresaUuid!,
+                                  fechaCreacion: _fechaCreacion,
+                                  minera: _mineraId!,
+                                  mineraId: _mineraUuid!,
+                                );
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "Usuario creado correctamente",
+                                      ),
                                     ),
-                                  ),
-                                );
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return SplashScreen();
-                                    },
-                                  ),
-                                  (route) => route.isFirst,
-                                );
-                              }
-                            } catch (e) {
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('No se pudo crear usuario'),
-                                  ),
-                                );
+                                  );
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return SplashScreen();
+                                      },
+                                    ),
+                                    (route) => route.isFirst,
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('No se pudo crear usuario'),
+                                    ),
+                                  );
+                                }
                               }
                             }
                           },
