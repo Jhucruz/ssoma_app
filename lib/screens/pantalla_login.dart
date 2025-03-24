@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ssoma_app/repositories/auth_reporsitory.dart';
 import 'package:ssoma_app/screens/pantalla_registro.dart';
 import 'package:ssoma_app/core/ui/input_personalizado.dart'
-    show InputPerzonalizado;
+    show InputPersonalizado;
 import 'package:ssoma_app/screens/splash_screen.dart' show SplashScreen;
 
 class PantallaLogin extends StatefulWidget {
@@ -44,7 +44,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
                 Divider(height: 24),
                 SizedBox(
                   width: 600,
-                  child: InputPerzonalizado(
+                  child: InputPersonalizado(
                     controller: _emailController,
                     label: "Correo electronico ",
                     keyboardType: TextInputType.emailAddress,
@@ -64,10 +64,10 @@ class _PantallaLoginState extends State<PantallaLogin> {
                 ),
                 SizedBox(
                   width: 600,
-                  child: InputPerzonalizado(
+                  child: InputPersonalizado(
                     controller: _passwordController,
                     label: "Contraseña",
-                    maxLength: 8,
+
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     icono: Icons.lock,

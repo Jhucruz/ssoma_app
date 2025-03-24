@@ -16,6 +16,7 @@ dependencies:
   flutter_svg: ^2.0.17
   google_fonts: ^6.2.1
   uuid: ^3.0.6
+  file_picker: 9.2.1
 
 dev_dependencies:
   flutter_test:

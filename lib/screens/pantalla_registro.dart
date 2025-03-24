@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ssoma_app/screens/splash_screen.dart' show SplashScreen;
 import 'package:ssoma_app/core/ui/input_personalizado.dart'
-    show InputPerzonalizado;
+    show InputPersonalizado;
 import 'package:ssoma_app/repositories/auth_reporsitory.dart';
 import 'package:uuid/uuid.dart';
 
@@ -26,6 +26,14 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
   final List<Map<String, String>> _empresas = [
     {"id": "1", "name": 'Empresa A'},
     {"id": "2", "name": 'Empresa B'},
+    {"id": "3", "name": 'Empresa C'},
+    {"id": "4", "name": 'Empresa D'},
+    {"id": "5", "name": 'Empresa E'},
+    {"id": "6", "name": 'Empresa F'},
+    {"id": "7", "name": 'Empresa G'},
+    {"id": "8", "name": 'Empresa H'},
+    {"id": "9", "name": 'Empresa I'},
+    {"id": "10", "name": 'Empresa J'},
   ];
   String? _empresaId;
   String? _empresaUuid;
@@ -33,6 +41,11 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
   final List<Map<String, String>> _mineras = [
     {"id": "1", "name": 'Minera A'},
     {"id": "2", "name": "Minera B"},
+    {"id": "3", "name": "Minera c"},
+    {"id": "4", "name": "Minera D"},
+    {"id": "5", "name": "Minera E"},
+    {"id": "6", "name": "Minera F"},
+    {"id": "7", "name": "Minera G"},
   ];
 
   String? _mineraId;
@@ -81,13 +94,13 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
 
                     children: [
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _fechaCreacionController,
                         label: "Fecha de Registro",
                         readOnly: true,
                       ),
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _nombreController,
                         label: "Nombres",
                         keyboardType: TextInputType.name,
@@ -100,7 +113,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                         },
                       ),
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _apellidoController,
                         label: "Apellidos",
                         keyboardType: TextInputType.name,
@@ -174,7 +187,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                       SizedBox(height: 16),
 
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _correoController,
                         label: "Correo electronico",
                         keyboardType: TextInputType.emailAddress,
@@ -193,7 +206,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                       ),
 
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _contraseniaController,
                         label: "Crea una nueva Contraseña",
                         keyboardType: TextInputType.visiblePassword,
@@ -211,7 +224,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
                         },
                       ),
                       SizedBox(height: 16),
-                      InputPerzonalizado(
+                      InputPersonalizado(
                         controller: _contraseController,
                         label: "Repita su contraseña ",
                         keyboardType: TextInputType.visiblePassword,

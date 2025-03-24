@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class InputPerzonalizado extends StatefulWidget {
-  const InputPerzonalizado({
+class InputPersonalizado extends StatefulWidget {
+  const InputPersonalizado({
     super.key,
     required this.label,
     this.autocorrect = true,
@@ -28,10 +28,10 @@ class InputPerzonalizado extends StatefulWidget {
   final bool readOnly;
 
   @override
-  State<InputPerzonalizado> createState() => _InputPerzonalizadoState();
+  State<InputPersonalizado> createState() => _InputPersonalizadoState();
 }
 
-class _InputPerzonalizadoState extends State<InputPerzonalizado> {
+class _InputPersonalizadoState extends State<InputPersonalizado> {
   late bool _obscureText;
 
   @override
@@ -53,6 +53,7 @@ class _InputPerzonalizadoState extends State<InputPerzonalizado> {
         obscureText: _obscureText,
         maxLength: widget.maxLength,
         readOnly: widget.readOnly,
+
         decoration: InputDecoration(
           prefixIcon: widget.icono != null ? Icon(widget.icono) : null,
           suffixIcon:
