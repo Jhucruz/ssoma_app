@@ -1,9 +1,17 @@
-// input_lineas.dart
-
 import 'package:flutter/material.dart';
 
 class InputLineas extends StatelessWidget {
-  // Nombre corregido a InputLineas
+  const InputLineas({
+    super.key, // Corrección aquí: usa super.key
+    required this.controller,
+    required this.label,
+    required this.keyboardType,
+    required this.autocorrect,
+    this.maxLength,
+    this.maxLines,
+    this.validator,
+  }); // Eliminamos : super(key: key);
+
   final TextEditingController controller;
   final String label;
   final TextInputType keyboardType;
@@ -11,18 +19,6 @@ class InputLineas extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final String? Function(String?)? validator;
-
-  const InputLineas({
-    // Nombre corregido a InputLineas
-    Key? key,
-    required this.controller,
-    required this.label,
-    required this.keyboardType,
-    required this.autocorrect,
-    required this.maxLength,
-    required this.maxLines,
-    required this.validator,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
