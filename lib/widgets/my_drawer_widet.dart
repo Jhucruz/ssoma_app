@@ -70,6 +70,10 @@ class MyDrawerWidet extends StatelessWidget {
             },
           ),
           Divider(),
+          Center(
+            // Envolvemos el Text en un Center
+            child: Text("U.M San Juan "),
+          ),
           ListTile(
             leading: Icon(Icons.file_copy, color: Colors.green),
             title: Text("Formulario Incidentes"),

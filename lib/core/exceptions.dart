@@ -41,3 +41,5 @@ class ExceptionLogout implements Exception {
     return 'ExceptionLogout: $message';
   }
 }
+
+class ExcepcionGuardarInspeccion implements Exception {}
